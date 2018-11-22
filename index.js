@@ -5,15 +5,19 @@ const dogComponent = require('./components/dogs');
 const bodyParser = require('body-parser')
 
 
-const exampleMiddleware = function (req, res, next) {
+
+const customHeaderCheckerMiddleware = function(req, res, next) {
     console.log('Middleware is active!');
+    if(req.headers['custom-header-param'] === undefined)
+    {
+        return res.sendStatus(400);        
+    }
 
     // pass the control to the next handler in line
     next();
-};
+}
 
-app.use(exampleMiddleware);
-
+app.use(customHeaderCheckerMiddleware);
 app.use(bodyParser.json());
 
 /* basic HTTP method handling */

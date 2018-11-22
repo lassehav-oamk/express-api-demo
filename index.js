@@ -2,6 +2,19 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const dogComponent = require('./components/dogs');
+const bodyParser = require('body-parser')
+
+
+const exampleMiddleware = function (req, res, next) {
+    console.log('Middleware is active!');
+
+    // pass the control to the next handler in line
+    next();
+};
+
+app.use(exampleMiddleware);
+
+app.use(bodyParser.json());
 
 /* basic HTTP method handling */
 app.get('/hello', (req, res) => res.send('Hello GET World!'));

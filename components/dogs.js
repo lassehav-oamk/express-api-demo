@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-/* Some fixed example data of dogs */
+//  Some fixed example data of dogs 
 const dogData = {
     dogs: [{
         id: 1,
@@ -17,10 +17,10 @@ const dogData = {
     }]
 }
 
-/* Return all dog information */
+//  Return all dog information 
 router.get('/', (req, res) => { res.json(dogData)});
 
-/* Return information of a single dog */
+//  Return information of a single dog 
 router.get('/:dogId', (req, res) => {
     const resultDog = dogData.dogs.find(d => {
         if (d.id == req.params.dogId) {
@@ -39,5 +39,16 @@ router.get('/:dogId', (req, res) => {
         res.json(resultDog);
     }
 })
+
+// Create a new dog 
+router.post('/', (req, res) => {
+
+    dogData.dogs.push({
+        id: dogData.dogs.length + 1,
+        name: req.body.name,
+    })
+    
+    res.sendStatus(201);
+});
 
 module.exports = router;

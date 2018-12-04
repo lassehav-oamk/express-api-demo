@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const dogComponent = require('./components/dogs');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const apiKeyDemo = require('./components/apiKeyDemo');
 
 
 
@@ -10,7 +11,7 @@ const customHeaderCheckerMiddleware = function(req, res, next) {
     console.log('Middleware is active!');
     if(req.headers['custom-header-param'] === undefined)
     {
-        return res.sendStatus(400);
+        return res.status(400).json({ reason: "custom-header-param header missing"});
     }
 
     // pass the control to the next handler in line
@@ -41,6 +42,8 @@ app.route('/world')
 /* demonstrate route module/component usage - the dogComponent content is defined in separate file */
 app.use('/dogs', dogComponent);
 
+app.use('/apiKey', apiKeyDemo);
+
 app.listen(port, () => {
     console.log(`Example API listening on http://localhost:${port}\n`);
     console.log('Available API endpoints');
@@ -49,5 +52,7 @@ app.listen(port, () => {
     console.log('  /world [GET, POST, PUT, DELETE]');
     console.log('\n  /dogs [GET, POST]');
     console.log('  /dogs/{dogId} [GET]');
+    console.log('\n  /apikey/new/{username} [GET]');
+    console.log('  /apikey/protected} [GET]');
     console.log('\n\n Use for example curl or Postman tools to send HTTP requests to the endpoints');
 });

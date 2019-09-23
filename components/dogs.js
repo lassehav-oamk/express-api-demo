@@ -5,15 +5,18 @@ const router = express.Router();
 const dogData = {
     dogs: [{
         id: 1,
-        name: "Max"
+        name: "Max",
+        image: "https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif"
     },
     {
         id: 2,
-        name: "Bella"
+        name: "Bella",
+        image: "https://media.giphy.com/media/3ndAvMC5LFPNMCzq7m/giphy.gif"
     },
     {
         id: 3,
-        name: "Tucker"
+        name: "Tucker",
+        image: "https://media.giphy.com/media/bbshzgyFQDqPHXBo4c/giphy.gif"
     }]
 }
 

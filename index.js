@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 4000;
 const dogComponent = require('./components/dogs');
 const bodyParser = require('body-parser');
 const apiKeyDemo = require('./components/apiKeyDemo');
+var cors = require('cors');
 
 
 
@@ -18,8 +19,10 @@ const customHeaderCheckerMiddleware = function(req, res, next) {
     next();
 }
 
-app.use(customHeaderCheckerMiddleware);
+//app.use(customHeaderCheckerMiddleware);
 app.use(bodyParser.json());
+app.use(cors())
+
 
 /* basic HTTP method handling */
 app.get('/hello', (req, res) => res.send('Hello GET World!'));

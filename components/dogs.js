@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //  Some fixed example data of dogs 
-const dogData = {
+let dogData = {
     dogs: [{
         id: 1,
         name: "Max",
@@ -43,15 +43,27 @@ router.get('/:dogId', (req, res) => {
     }
 })
 
-// Create a new dog 
+/* Create a new dog 
+    Expects the following data format
+    {
+        name: string, 
+        image: string - whole url to image
+    }
+*/
 router.post('/', (req, res) => {
 
     dogData.dogs.push({
         id: dogData.dogs.length + 1,
         name: req.body.name,
+        image: req.body.image
     })
     
     res.sendStatus(201);
 });
+
+router.delete('/:id', (req, res) => {
+    dogData.dogs = dogData.dogs.filter(dog => dog.id != req.params.id);
+    res.sendStatus(200);
+})
 
 module.exports = router;

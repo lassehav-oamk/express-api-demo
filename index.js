@@ -4,7 +4,7 @@ const port = 4000;
 const dogComponent = require('./components/dogs');
 const bodyParser = require('body-parser');
 const apiKeyDemo = require('./components/apiKeyDemo');
-var cors = require('cors');
+const cors = require('cors');
 
 
 
@@ -54,7 +54,7 @@ app.listen(port, () => {
     console.log('  /hello/{param1}/world/{param2} [GET]');
     console.log('  /world [GET, POST, PUT, DELETE]');
     console.log('\n  /dogs [GET, POST]');
-    console.log('  /dogs/{dogId} [GET]');
+    console.log('  /dogs/{dogId} [GET, DELETE]');
     console.log('\n  /apikey/new/{username} [GET]');
     console.log('  /apikey/protected} [GET]');
     console.log('\n\n Use for example curl or Postman tools to send HTTP requests to the endpoints');

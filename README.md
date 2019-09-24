@@ -23,7 +23,8 @@ Available API endpoints
 *  /world [GET, POST, PUT, DELETE]
 
 *  /dogs [GET, POST]
-*  /dogs/{dogId} [GET]
+*  /dogs/{dogId} [GET, DELETE]
+
 
 *  /apikey/new/{username} [GET]
 *  /apikey/protected} [GET]

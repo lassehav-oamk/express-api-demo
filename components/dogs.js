@@ -5,7 +5,7 @@ const router = express.Router();
 //  Return all dog information 
 router.get('/', (req, res) => { 
     db.query('SELECT * FROM dogHouse').then(results => {
-        res.json(results)
+        res.json({ dogs: results})
     })
     .catch(() => {
         res.sendStatus(500);

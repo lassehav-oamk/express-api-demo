@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "58c201aa-bd2b-4624-a519-011a6faa127b",
+		"name": "DogTestingNewman",
+		"description": "Testing dog api with postman collections to newman CLI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET dogs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c2ffe7e-45f2-44cc-828b-8c22a84a520c",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Should be three dogs\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dogs.length).to.eql(3);",
+							"});",
+							"",
+							"pm.test(\"Validate dog structure\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.dogs[0]).to.have.property('id');",
+							"    pm.expect(jsonData.dogs[0]).to.have.property('nams');",
+							"    pm.expect(jsonData.dogs[0]).to.have.property('image');",
+							"});",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/dogs",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"dogs"
+					]
+				},
+				"description": "Get current dog information"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -11,6 +11,12 @@ npm install
 Example of an simple API test with Postman / Newman CLI is provided in postman-collections folder.
 See more information on Newman at https://learning.getpostman.com/docs/postman/collection-runs/command-line-integration-with-newman/
 
+Run sample tests on CLI with command
+```
+npx newman run postman-collections\DogTestingNewman.postman_collection.json
+```
+
+
 ## Usage
 
 Start the application

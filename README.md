@@ -16,6 +16,10 @@ Run sample tests on CLI with command
 npx newman run postman-collections\DogTestingNewman.postman_collection.json
 ```
 
+Newman / Postman assertion library vocabulary:
+https://www.chaijs.com/api/bdd/
+
+
 
 ## Usage
 

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "58c201aa-bd2b-4624-a519-011a6faa127b",
+		"_postman_id": "3610e4d9-300c-40e2-98c3-7a6f277feaa7",
 		"name": "DogTestingNewman",
 		"description": "Testing dog api with postman collections to newman CLI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -27,7 +27,7 @@
 							"pm.test(\"Validate dog structure\", function () {",
 							"    var jsonData = pm.response.json();",
 							"    pm.expect(jsonData.dogs[0]).to.have.property('id');",
-							"    pm.expect(jsonData.dogs[0]).to.have.property('nams');",
+							"    pm.expect(jsonData.dogs[0]).to.have.property('name');",
 							"    pm.expect(jsonData.dogs[0]).to.have.property('image');",
 							"});",
 							"",
@@ -53,6 +53,47 @@
 					]
 				},
 				"description": "Get current dog information"
+			},
+			"response": []
+		},
+		{
+			"name": "GET single dog",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "20ce2a28-eb6a-4e4b-b8f1-c81dc51384af",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Validate structure and content\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an.instanceof(Object);",
+							"    pm.expect(jsonData).to.have.property('id', 1);",
+							"    pm.expect(jsonData).to.have.property('name', 'Max');",
+							"    pm.expect(jsonData).to.have.property('image');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/dogs/1",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"dogs",
+						"1"
+					]
+				}
 			},
 			"response": []
 		}

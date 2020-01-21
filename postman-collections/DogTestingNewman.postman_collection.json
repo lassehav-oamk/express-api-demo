@@ -12,16 +12,19 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0c2ffe7e-45f2-44cc-828b-8c22a84a520c",
+						"id": "036eadc0-5522-4179-8068-adf9be5177b5",
 						"exec": [
 							"",
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"});",
 							"",
-							"pm.test(\"Should be three dogs\", function () {",
+							"pm.test(\"Should be correct number of dogs\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData.dogs.length).to.eql(3);",
+							"    ",
+							"    var dogCount = parseInt(pm.environment.get(\"dog-count\"));",
+							"    ",
+							"    pm.expect(jsonData.dogs.length).to.eql(dogCount);",
 							"});",
 							"",
 							"pm.test(\"Validate dog structure\", function () {",
@@ -29,11 +32,7 @@
 							"    pm.expect(jsonData.dogs[0]).to.have.property('id');",
 							"    pm.expect(jsonData.dogs[0]).to.have.property('name');",
 							"    pm.expect(jsonData.dogs[0]).to.have.property('image');",
-							"});",
-							"",
-							"",
-							"",
-							""
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -94,6 +93,152 @@
 						"1"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST New Dog - complete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6863a484-b901-41fa-b932-54ad86f8d0eb",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Check that server returns id field for new dog\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('id');",
+							"    ",
+							"    ",
+							"    var dogCount = parseInt(pm.environment.get(\"dog-count\"));",
+							"    dogCount++;",
+							"    pm.environment.set(\"dog-count\", dogCount);",
+							"    if(dogCount < 5)",
+							"    {",
+							"        postman.setNextRequest('GET dogs');    ",
+							"    }",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "51c1772d-804f-47e4-aa43-815f292e05d9",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Jepsu\",\r\n    \"image\": \"https://www.image.com/something.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/dogs",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"dogs"
+					]
+				},
+				"description": "Create new dog"
+			},
+			"response": []
+		},
+		{
+			"name": "POST New Dog - name missing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"image\": \"https://www.image.com/something.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/dogs",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"dogs"
+					]
+				},
+				"description": "Create new dog missing name property"
+			},
+			"response": []
+		},
+		{
+			"name": "POST New Dog - image missing",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Jepsu\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/dogs",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"dogs"
+					]
+				},
+				"description": "Create new dog missing image property"
 			},
 			"response": []
 		}

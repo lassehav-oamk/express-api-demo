@@ -1,7 +1,22 @@
 const express = require('express');
+const has = require('has-value');
 const router = express.Router();
 
-//  Some fixed example data of dogs 
+function validateJSONHeaders(req, res, next)
+{
+    if(req.get('Content-Type') === 'application/json')
+    {
+        next();
+    }
+    else
+    {
+        const err = new Error('Bad Request - Missing Headers');
+        err.status = 400;
+        next(err);
+    }
+}
+
+//  Some fixed example data of dogs
 let dogData = {
     dogs: [{
         id: 1,
@@ -20,10 +35,10 @@ let dogData = {
     }]
 }
 
-//  Return all dog information 
+//  Return all dog information
 router.get('/', (req, res) => { res.json(dogData)});
 
-//  Return information of a single dog 
+//  Return information of a single dog
 router.get('/:dogId', (req, res) => {
     const resultDog = dogData.dogs.find(d => {
         if (d.id == req.params.dogId) {
@@ -43,22 +58,48 @@ router.get('/:dogId', (req, res) => {
     }
 })
 
-/* Create a new dog 
+/* Middleware to validate new dog creation */
+function validateNewDog(req, res, next)
+{
+    // prepare error object
+    const err = new Error();
+    err.name = "Bad Request";
+    err.status = 400;
+    if(has(req.body, 'name') == false)
+    {
+        err.message = "Missing or empty name";
+        next(err);
+    }
+    if(has(req.body, 'image') == false)
+    {
+        err.message = "Missing or empty image";
+        next(err);
+    }
+    next(); // no validation errors, so pass to the next
+}
+
+/* Create a new dog
     Expects the following data format
     {
-        name: string, 
+        name: string,
         image: string - whole url to image
     }
 */
-router.post('/', (req, res) => {
+router.post('/',
+    [
+      validateJSONHeaders,
+      validateNewDog
+    ],
+    (req, res) => {
+        const newDog = {
+            id: dogData.dogs.length + 1,
+            name: req.body.name,
+            image: req.body.image
+        }
+        dogData.dogs.push(newDog);
 
-    dogData.dogs.push({
-        id: dogData.dogs.length + 1,
-        name: req.body.name,
-        image: req.body.image
-    })
-    
-    res.sendStatus(201);
+        res.status(201);
+        res.json(newDog);
 });
 
 router.delete('/:id', (req, res) => {

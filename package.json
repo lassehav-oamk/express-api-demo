@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx newman run postman-collections/DogTestingNewman.postman_collection.json -e postman-collections/Development.postman_environment.json",
     "api": "node node_modules/nodemon/bin/nodemon.js"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "has-value": "^2.0.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

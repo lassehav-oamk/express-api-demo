@@ -21,7 +21,7 @@ const customHeaderCheckerMiddleware = function(req, res, next) {
 
 //app.use(customHeaderCheckerMiddleware);
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
 
 
 /* basic HTTP method handling */
@@ -46,6 +46,25 @@ app.route('/world')
 app.use('/dogs', dogComponent);
 
 app.use('/apiKey', apiKeyDemo);
+
+/* This will be activated as the last if no other route matches. */
+app.use((req, res, next) => {
+    const err = new Error('Not Found');
+    err.status = 404; // Set status code to 404
+    next(err);  /* If you pass anything to the next() function (except the string 'route'),
+                 Express regards the current request as being an error and will skip any
+                 remaining non-error handling routing and middleware functions. */
+});
+
+/* This is an error handling middleware, the function has four parameters.
+   See https://expressjs.com/en/guide/using-middleware.html#middleware.error-handling */
+app.use((err, req, res, next) => {
+    res.status(err.status);
+    console.error(err.toString());
+    console.error('Path attempted - ' + req.path)
+    res.send(err.toString());
+});
+
 
 app.listen(port, () => {
     console.log(`Example API listening on http://localhost:${port}\n`);

@@ -13,7 +13,7 @@ See more information on Newman at https://learning.getpostman.com/docs/postman/c
 
 Run sample tests on CLI with command
 ```
-npx newman run postman-collections\DogTestingNewman.postman_collection.json
+npm run test
 ```
 
 Newman / Postman assertion library vocabulary:

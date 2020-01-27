@@ -14,6 +14,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "has-value": "^2.0.2",
+    "multer": "^1.4.2",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

@@ -43,5 +43,7 @@ Available API endpoints
 *  /apikey/new/{username} [GET]
 *  /apikey/protected} [GET]
 
+*  /fileUpload [POST] multipart file upload
+
 
  Use for example curl or Postman tools to send HTTP requests to the endpoints

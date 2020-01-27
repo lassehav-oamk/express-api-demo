@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const port = 4000;
+
 const dogComponent = require('./components/dogs');
+const imageUpload = require('./components/imageUpload');
 const bodyParser = require('body-parser');
 const apiKeyDemo = require('./components/apiKeyDemo');
 const cors = require('cors');
@@ -47,6 +49,8 @@ app.use('/dogs', dogComponent);
 
 app.use('/apiKey', apiKeyDemo);
 
+app.use('/fileUpload', imageUpload);
+
 /* This will be activated as the last if no other route matches. */
 app.use((req, res, next) => {
     const err = new Error('Not Found');
@@ -76,5 +80,6 @@ app.listen(port, () => {
     console.log('  /dogs/{dogId} [GET, DELETE]');
     console.log('\n  /apikey/new/{username} [GET]');
     console.log('  /apikey/protected} [GET]');
+    console.log('\n  /fileUpload [POST] multipart file upload');
     console.log('\n\n Use for example curl or Postman tools to send HTTP requests to the endpoints');
 });

@@ -49,7 +49,7 @@ app.use('/apiKey', apiKeyDemo);
 
 
 /* DB init */
-Promise.all(    
+Promise.all(
     [
         db.query(`CREATE TABLE IF NOT EXISTS dogHouse(
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -72,4 +72,5 @@ Promise.all(
         console.log('  /apikey/protected} [GET]');
         console.log('\n\n Use for example curl or Postman tools to send HTTP requests to the endpoints');
     });
-});
+})
+.catch(error => console.log(error));

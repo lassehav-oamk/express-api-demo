@@ -18,7 +18,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "newman": "^4.5.7",
+    "newman": "^5.2.2",
     "nodemon": "^1.18.9"
   }
 }

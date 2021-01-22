@@ -7,6 +7,7 @@ const imageUpload = require('./components/imageUpload');
 const bodyParser = require('body-parser');
 const apiKeyDemo = require('./components/apiKeyDemo');
 const cors = require('cors');
+const jsonSchemaValidationExample = require('./components/jsonSchemaValidationExample');
 
 
 
@@ -46,10 +47,9 @@ app.route('/world')
 
 /* demonstrate route module/component usage - the dogComponent content is defined in separate file */
 app.use('/dogs', dogComponent);
-
 app.use('/apiKey', apiKeyDemo);
-
 app.use('/fileUpload', imageUpload);
+app.use('/jsonSchemaValidationExample', jsonSchemaValidationExample);
 
 /* This will be activated as the last if no other route matches. */
 app.use((req, res, next) => {
@@ -63,10 +63,19 @@ app.use((req, res, next) => {
 /* This is an error handling middleware, the function has four parameters.
    See https://expressjs.com/en/guide/using-middleware.html#middleware.error-handling */
 app.use((err, req, res, next) => {
-    res.status(err.status);
-    console.error(err.toString());
-    console.error('Path attempted - ' + req.path)
-    res.send(err.toString());
+    if(err.hasOwnProperty('status') == true) {
+      const date = new Date();
+      console.error(date.toUTCString() + ' - ' + err.toString());
+      console.error('Path attempted - ' + req.path)
+
+      res.status(err.status);
+      res.json({
+        reason: err.toString()
+      });
+    }
+    else {
+      next();
+    }
 });
 
 
@@ -81,5 +90,6 @@ app.listen(port, () => {
     console.log('\n  /apikey/new/{username} [GET]');
     console.log('  /apikey/protected} [GET]');
     console.log('\n  /fileUpload [POST] multipart file upload');
+    console.log('\n  /jsonSchemaValidationExample [POST] testing JSON Schema Validation');
     console.log('\n\n Use for example curl or Postman tools to send HTTP requests to the endpoints');
 });
